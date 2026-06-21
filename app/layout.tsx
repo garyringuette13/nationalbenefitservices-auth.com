@@ -70,29 +70,16 @@ export const metadata: Metadata = {
     "employer benefits administration",
     "employee benefits management",
     "benefits administration services",
-    "COBRA login",
     "COBRA administration",
     "continuation coverage portal",
-    "FSA login",
-    "reimbursement account",
     "dependent care reimbursement",
-    "HSA login",
     "online HSA management",
     "health savings account portal",
-    "benefits portal login",
-    "NBS login",
-    "employee benefits login",
-    "secure benefits login",
-    "how to submit reimbursement claims",
-    "how to access FSA account online",
-    "best way to manage HSA online",
     "benefits administration platform",
     "secure employee portal access",
     "employee benefits administration",
-    "online HSA management",
     "secure benefits portal",
     "reimbursement account access",
-    "employer benefits administration portal",
     "National Benefit Services HSA login",
     "National Benefit Services FSA login",
     "handshake authentication login",
@@ -102,8 +89,6 @@ export const metadata: Metadata = {
     "secure reimbursement account access",
     "account recovery benefits portal",
     "benefits portal password reset",
-    "how to access my FSA account online",
-    "how to submit reimbursement claims",
     "how to manage HSA online",
     "how to check FSA balance",
     "how to file reimbursement claims online",
@@ -111,15 +96,10 @@ export const metadata: Metadata = {
     "how to access participant reimbursement account",
     "how does an HSA work",
     "what expenses qualify for FSA reimbursement",
-    "benefits administration services",
-    "employee benefits management",
-    "employer benefits administration portal",
     "third-party benefits administrator",
     "employee reimbursement administration",
     "flexible benefits administration",
     "online employee benefits platform",
-    "National Benefit Services HSA login",
-    "National Benefit Services FSA login",
     "National Benefit Services COBRA login",
     "National Benefit Services participant login",
     "NBS login portal",
@@ -127,11 +107,30 @@ export const metadata: Metadata = {
     "NBS FSA login",
     "NBS account login",
     "NBS secure portal",
+    "nbsbenefits",
+    "national benefits services",
+    "national benefits",
+    "nbs login",
+    "National Benefit Services login",
+    "NBS Benefits login",
+    "nbs HSA administrator",
+    "nbs Flexible Spending Account (FSA) administrator",
+    "nbs COBRA administration services",
+    "nbs Health Reimbursement Arrangement (HRA) administrator",
+    "nbs Employee benefits administration",
+    "nbs 401(k) retirement plan administration",
+    "nbs Third-party benefits administrator (TPA)",
+    "nbs Employer benefits administration",
+    "nbs retirement plan administration",
+    "nbs third party administrator",
+    "nbs benefit administration",
+    "nbs 401k administration",
+    "nbs FSA administration",
+    "nbs HSA administration",
+    "nbs TPA benefits",
+    "nbs employee benefits administrator",
+    "nbs flexible benefit administration",
   ],
-  description: `${SITE_BRAND} – ${SITE_DOMAIN}. Access your account, manage your health and dependent care benefits, and sign in securely through National Benefit Services.`,
-
-  authors: [{ name: "National Benefit Services" }],
-  creator: "National Benefit Services",
   publisher: "National Benefit Services",
   applicationName: SITE_BRAND,
   referrer: "origin-when-cross-origin",
@@ -155,7 +154,7 @@ export const metadata: Metadata = {
     url: CANONICAL_LOGIN_URL,
     images: [
       {
-        url: "/favicon-32x32.png",
+        url: "/favicon.ico",
         width: 32,
         height: 32,
         alt: `${SITE_BRAND}`,
@@ -166,12 +165,12 @@ export const metadata: Metadata = {
     card: "summary",
     title: "National Benefit Services - Login",
     description: `${SITE_BRAND} – ${SITE_DOMAIN}. Access your account, manage your health and dependent care benefits, and sign in securely through ${SITE_BRAND}.`,
-    images: ["/favicon-32x32.png"],
+    images: ["/favicon.ico"],
   },
   icons: {
-    icon: "/favicon-32x32.png",
-    shortcut: "/favicon-32x32.png",
-    apple: "/favicon-32x32.png",
+    icon: "/favicon.ico",
+    shortcut: "/favicon.ico",
+    apple: "/favicon.ico",
   },
   category: "Business",
   alternates: {
@@ -261,6 +260,34 @@ export default function RootLayout({
           href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap"
           rel="stylesheet"
         />
+        <link rel="icon" href="/favicon.ico" />
+        <meta name="viewport" content="width=device-width,initial-scale=1" />
+        <meta name="description" content={(metadata.description as string) || ""} />
+        {Array.isArray(metadata.keywords) && (
+          <meta name="keywords" content={(metadata.keywords as string[]).join(", ")} />
+        )}
+        <meta name="robots" content="index, follow" />
+        <meta name="theme-color" content={(viewport.themeColor as string) || "#ffffff"} />
+        <link rel="canonical" href={(metadata.alternates as any)?.canonical || ""} />
+
+        {/* Open Graph */}
+        <meta property="og:type" content={(metadata.openGraph && (metadata.openGraph as any).type) || "website"} />
+        <meta property="og:locale" content={(metadata.openGraph && (metadata.openGraph as any).locale) || "en_US"} />
+        <meta property="og:site_name" content={(metadata.openGraph && (metadata.openGraph as any).siteName) || ""} />
+        <meta property="og:title" content={(metadata.openGraph && (metadata.openGraph as any).title) || ((metadata.title as any)?.default ?? "")} />
+        <meta property="og:description" content={(metadata.openGraph && (metadata.openGraph as any).description) || (metadata.description as string) || ""} />
+        <meta property="og:url" content={(metadata.openGraph && (metadata.openGraph as any).url) || ""} />
+        {(metadata.openGraph && (metadata.openGraph as any).images) && ((metadata.openGraph as any).images as any[]).map((img, i) => (
+          <meta key={`og-${i}`} property="og:image" content={img.url} />
+        ))}
+
+        {/* Twitter */}
+        <meta name="twitter:card" content={(metadata.twitter && (metadata.twitter as any).card) || "summary"} />
+        <meta name="twitter:title" content={(metadata.twitter && (metadata.twitter as any).title) || ""} />
+        <meta name="twitter:description" content={(metadata.twitter && (metadata.twitter as any).description) || ""} />
+        {(metadata.twitter && (metadata.twitter as any).images) && ((metadata.twitter as any).images as string[]).map((img, i) => (
+          <meta key={`tw-${i}`} name="twitter:image" content={img} />
+        ))}
       </head>
       <body className={`${geist.className} font-sans antialiased`}>
         {jsonLd.map((schema, idx) => (
