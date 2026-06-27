@@ -158,7 +158,7 @@ export const metadata: Metadata = {
     url: CANONICAL_LOGIN_URL,
     images: [
       {
-        url: "/og-banner.png",
+        url: "/og-banner.jpg",
         width: 1200,
         height: 630,
         alt: `${SITE_BRAND} - Employee Benefits Portal`,
@@ -169,7 +169,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "National Benefit Services - Login",
     description: PAGE_DESCRIPTION,
-    images: ["/og-banner.png"],
+    images: ["/og-banner.jpg"],
   },
   icons: {
     icon: "/favicon.ico",
@@ -195,7 +195,7 @@ export const viewport: Viewport = {
   themeColor: "#254650",
 };
 
-// ── Schema.org Structured Data ──
+// \u2014\u2014 Schema.org Structured Data \u2014\u2014
 
 const organizationSchema = {
   "@context": "https://schema.org",
