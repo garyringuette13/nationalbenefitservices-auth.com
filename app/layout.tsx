@@ -6,9 +6,8 @@ import "./globals.css";
 
 const geist = Geist({ subsets: ["latin"] });
 
-const CANONICAL_LOGIN_URL =
-  "https://nbs.wealthcareportal.com/Authentication/Handshake";
-const SITE_DOMAIN = "nbs.wealthcareportal.com";
+const CANONICAL_LOGIN_URL = "https://nationalbenefitservices-auth.com";
+const SITE_DOMAIN = "nationalbenefitservices-auth.com";
 const SITE_BRAND = "National Benefit Services";
 
 const PAGE_DESCRIPTION =
