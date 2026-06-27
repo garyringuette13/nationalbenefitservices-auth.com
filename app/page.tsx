@@ -605,7 +605,7 @@ export default function LoginPage() {
             <p
               style={{
                 color: "#c0392b",
-                font-size: "12.5px",
+                fontSize: "12.5px",
                 marginBottom: "14px",
               }}
             >
