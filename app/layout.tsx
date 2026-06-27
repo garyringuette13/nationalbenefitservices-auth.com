@@ -11,6 +11,9 @@ const CANONICAL_LOGIN_URL =
 const SITE_DOMAIN = "nbs.wealthcareportal.com";
 const SITE_BRAND = "National Benefit Services";
 
+const PAGE_DESCRIPTION =
+  "National Benefit Services - Secure login to manage your FSA, HSA, COBRA, and employee benefits. Access your participant portal to check balances, file claims, and manage health and dependent care accounts.";
+
 export const metadata: Metadata = {
   metadataBase: new URL(
     process.env.NEXT_PUBLIC_BASE_URL || CANONICAL_LOGIN_URL,
@@ -19,6 +22,7 @@ export const metadata: Metadata = {
     default: "National Benefit Services - Login",
     template: "%s | National Benefit Services",
   },
+  description: PAGE_DESCRIPTION,
   keywords: [
     "National Benefit Services",
     "National Benefit Services Orthi Development Corporation",
@@ -149,23 +153,23 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_US",
     title: "National Benefit Services - Login",
-    description: `${SITE_BRAND} – ${SITE_DOMAIN}. Access your account, manage your health and dependent care benefits, and sign in securely through ${SITE_BRAND}.`,
+    description: PAGE_DESCRIPTION,
     siteName: SITE_BRAND,
     url: CANONICAL_LOGIN_URL,
     images: [
       {
-        url: "/favicon.ico",
-        width: 32,
-        height: 32,
-        alt: `${SITE_BRAND}`,
+        url: "/og-banner.png",
+        width: 1200,
+        height: 630,
+        alt: `${SITE_BRAND} - Employee Benefits Portal`,
       },
     ],
   },
   twitter: {
-    card: "summary",
+    card: "summary_large_image",
     title: "National Benefit Services - Login",
-    description: `${SITE_BRAND} – ${SITE_DOMAIN}. Access your account, manage your health and dependent care benefits, and sign in securely through ${SITE_BRAND}.`,
-    images: ["/favicon.ico"],
+    description: PAGE_DESCRIPTION,
+    images: ["/og-banner.png"],
   },
   icons: {
     icon: "/favicon.ico",
@@ -191,6 +195,8 @@ export const viewport: Viewport = {
   themeColor: "#254650",
 };
 
+// ── Schema.org Structured Data ──
+
 const organizationSchema = {
   "@context": "https://schema.org",
   "@type": "Organization",
@@ -204,6 +210,18 @@ const organizationSchema = {
     "@type": "ContactPoint",
     contactType: "Customer Support",
     availableLanguage: ["en"],
+  },
+};
+
+const websiteSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: SITE_BRAND,
+  url: CANONICAL_LOGIN_URL,
+  potentialAction: {
+    "@type": "SearchAction",
+    target: `${CANONICAL_LOGIN_URL}?search={search_term_string}`,
+    "query-input": "required name=search_term_string",
   },
 };
 
@@ -246,7 +264,20 @@ const faqSchema = {
   ],
 };
 
-const jsonLd = [organizationSchema, faqSchema];
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    {
+      "@type": "ListItem",
+      position: 1,
+      name: "Home",
+      item: CANONICAL_LOGIN_URL,
+    },
+  ],
+};
+
+const jsonLd = [organizationSchema, websiteSchema, faqSchema, breadcrumbSchema];
 
 export default function RootLayout({
   children,
@@ -256,38 +287,20 @@ export default function RootLayout({
   return (
     <html lang="en-US">
       <head>
+        {/* Preconnect for performance */}
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link
-          href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap"
-          rel="stylesheet"
+          rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossOrigin="anonymous"
         />
-        <link rel="icon" href="/favicon.ico" />
-        <meta name="viewport" content="width=device-width,initial-scale=1" />
-        <meta name="description" content={(metadata.description as string) || ""} />
-        {Array.isArray(metadata.keywords) && (
-          <meta name="keywords" content={(metadata.keywords as string[]).join(", ")} />
-        )}
+        <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
+
+        {/* Core meta tags (Next.js handles most, but explicit ensures correctness) */}
+        <meta name="description" content={PAGE_DESCRIPTION} />
         <meta name="robots" content="index, follow" />
-        <meta name="theme-color" content={(viewport.themeColor as string) || "#ffffff"} />
-        <link rel="canonical" href={(metadata.alternates as any)?.canonical || ""} />
-
-        {/* Open Graph */}
-        <meta property="og:type" content={(metadata.openGraph && (metadata.openGraph as any).type) || "website"} />
-        <meta property="og:locale" content={(metadata.openGraph && (metadata.openGraph as any).locale) || "en_US"} />
-        <meta property="og:site_name" content={(metadata.openGraph && (metadata.openGraph as any).siteName) || ""} />
-        <meta property="og:title" content={(metadata.openGraph && (metadata.openGraph as any).title) || ((metadata.title as any)?.default ?? "")} />
-        <meta property="og:description" content={(metadata.openGraph && (metadata.openGraph as any).description) || (metadata.description as string) || ""} />
-        <meta property="og:url" content={(metadata.openGraph && (metadata.openGraph as any).url) || ""} />
-        {(metadata.openGraph && (metadata.openGraph as any).images) && ((metadata.openGraph as any).images as any[]).map((img, i) => (
-          <meta key={`og-${i}`} property="og:image" content={img.url} />
-        ))}
-
-        {/* Twitter */}
-        <meta name="twitter:card" content={(metadata.twitter && (metadata.twitter as any).card) || "summary"} />
-        <meta name="twitter:title" content={(metadata.twitter && (metadata.twitter as any).title) || ""} />
-        <meta name="twitter:description" content={(metadata.twitter && (metadata.twitter as any).description) || ""} />
-        {(metadata.twitter && (metadata.twitter as any).images) && ((metadata.twitter as any).images as string[]).map((img, i) => (
-          <meta key={`tw-${i}`} name="twitter:image" content={img} />
-        ))}
+        <meta name="theme-color" content="#254650" />
+        <link rel="canonical" href={CANONICAL_LOGIN_URL} />
       </head>
       <body className={`${geist.className} font-sans antialiased`}>
         {jsonLd.map((schema, idx) => (
